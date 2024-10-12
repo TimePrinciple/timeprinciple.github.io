@@ -27,3 +27,18 @@ specification, so for full GitHub support we should install it with:
 ```sh
 pip install mdformat-gfm mdformat-frontmatter mdformat-footnote mdformat-gfm-alerts
 ```
+
+## Configuration in Repository
+
+`mdformat` allows configuration specified in `.mdformat.toml` file. Firecracker
+community uses the following configuration:
+
+```toml
+wrap = 80
+# Defaults from https://mdformat.readthedocs.io/en/stable/users/configuration_file.html
+number = false
+end_of_line = "lf"
+```
+
+As of 80 columns wrapping, this is the default behavior I observed of `gq`
+command of Vim.
