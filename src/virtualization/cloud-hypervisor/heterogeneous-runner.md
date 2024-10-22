@@ -75,3 +75,23 @@ rm -rf qemu
 export PATH=$PATH:/opt/qemu/bin
 . .bashrc
 ```
+
+#### OPENSBI & UBOOT
+
+Besides QEMU, we need `opensbi` and `uboot` to launch an Ubuntu RISC-V virtual
+machine. These two could be installed through command:
+
+```sh
+sudo apt-get install opensbi u-boot-qemu
+```
+
+#### RISC-V Image
+
+I'm using a pre-installed RISC-V Ubuntu server image, which could be downloaded:
+
+```sh
+# Download Ubuntu 24.04.1 LTS
+wget https://cdimage.ubuntu.com/releases/24.04/release/ubuntu-24.04.1-preinstalled-server-riscv64.img.xz
+# Extract image
+xz -dk ubuntu-24.04.1-preinstalled-server-riscv64.img.xz
+```
