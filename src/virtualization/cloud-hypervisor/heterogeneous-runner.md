@@ -94,4 +94,7 @@ I'm using a pre-installed RISC-V Ubuntu server image, which could be downloaded:
 wget https://cdimage.ubuntu.com/releases/24.04/release/ubuntu-24.04.1-preinstalled-server-riscv64.img.xz
 # Extract image
 xz -dk ubuntu-24.04.1-preinstalled-server-riscv64.img.xz
+# Resize the image
+# The image defaults to 5 GiB, couldn't even fit in a kernel source code
+qemu-img resize -f raw ubuntu-24.04.1-preinstalled-server-riscv64.img +45G
 ```
