@@ -124,7 +124,7 @@ to be the development environment because its kernel version does not support
 AIA. With this script in place, you can start VM with command:
 
 ```sh
-bash start-riscv64.sh
+bash start-riscv64.sh ubuntu-24.04.1-preinstalled-server-riscv64.img
 ```
 
 ### Guest
