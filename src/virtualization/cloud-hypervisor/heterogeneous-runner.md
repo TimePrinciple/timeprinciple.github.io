@@ -98,3 +98,31 @@ xz -dk ubuntu-24.04.1-preinstalled-server-riscv64.img.xz
 # The image defaults to 5 GiB, couldn't even fit in a kernel source code
 qemu-img resize -f raw ubuntu-24.04.1-preinstalled-server-riscv64.img +45G
 ```
+
+#### Start Script
+
+The QEMU command used to start a RISC-V guest is normally lengthy, let's
+simplify it by writing them into a script named `start-riscv64.sh`:
+
+```bash
+# Change memory and cores that fits in your host
+qemu-system-riscv64 \
+    -machine virt \
+    -nographic \
+    -m 96G \
+    -smp 16 \
+    -bios /usr/lib/riscv64-linux-gnu/opensbi/generic/fw_jump.bin \
+    -kernel /usr/lib/u-boot/qemu-riscv64_smode/uboot.elf \
+    -device virtio-net-device,netdev=eth0 \
+    -netdev user,id=eth0,hostfwd=tcp::12055-:22 \
+    -device virtio-rng-pci \
+    -drive file=$1,format=raw,if=virtio \
+```
+
+This script is sufficient to boot a fully emulated RISC-V VM, but insufficient
+to be the development environment because its kernel version does not support
+AIA. With this script in place, you can start VM with command:
+
+```sh
+bash start-riscv64.sh
+```
