@@ -126,3 +126,43 @@ AIA. With this script in place, you can start VM with command:
 ```sh
 bash start-riscv64.sh
 ```
+
+### Guest
+
+You may now login into VM booted with user name and password being both
+`ubuntu`. After you have logged in, you will need to execute
+`sudo systemctl enable --now ssh` to make it standby, then you can ssh into this
+VM with `ssh ubuntu@localhost -p 12055`.
+
+#### Kernel
+
+As mentioned previously, the kernel shipped with Ubuntu 24.04.1 LTS is
+insufficient to develop type II hypervisors meet RVA23 standards. We will need
+to manually replace the kernel from upstream kernel source:
+
+```sh
+sudo apt update
+sudo DEBIAN_FRONTEND="noninteractive" apt-get install --no-install-recommends -y \
+    git python3 python3-pip ninja-build build-essential pkg-config curl bc jq \
+    libslirp-dev libfdt-dev libglib2.0-dev libssl-dev libpixman-1-dev \
+    flex bison
+
+git clone --depth 1 --branch v6.11 https://github.com/torvalds/linux.git
+pushd linux
+make defconfig
+# Enable kvm module instead of inserting manually
+sed -i "s|^CONFIG_KVM=.*|CONFIG_KVM=y|g" .config
+# Build kernel
+make -j$(nproc)
+# Install kernel
+sudo make headers_install
+sudo make modules_install
+# You might need to repeat this step, it somehow fails while installing for the
+# first time, retry should fix it. (PRs are welcome to explain why this happens)
+sudo make install
+sudo update-grub
+popd
+```
+
+After kernel is properly installed, you may power it off and start it again with
+AIA enabled.
