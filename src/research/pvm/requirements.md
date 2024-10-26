@@ -10,5 +10,3 @@ cloud. State-of-the-art nested virtualization in the x86 architecture relies
 heavily on the host hypervisor to expose hardware virtualization support to the
 guest hypervisor, not only complicating cloud management but also raising
 concerns about an increased attack surface at the host hypervisor.
-
-

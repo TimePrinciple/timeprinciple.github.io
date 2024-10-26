@@ -1,0 +1,26 @@
+name: Markdown style check
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches:
+      - main
+
+jobs:
+  md-style-checker:
+    name: Check Markdown Style
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install mdformat
+      run: |
+        sudo apt update
+        sudo apt install python3 python3-pip pipx
+        pipx install mdformat
+        pipx inject mdformat mdformat-gfm mdformat-frontmatter mdformat-footnote mdformat-gfm-alerts
+    
+    - name: Check Content Style
+      run: |
+        mdformat --check .
