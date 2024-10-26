@@ -166,3 +166,25 @@ popd
 
 After kernel is properly installed, you may power it off and start it again with
 AIA enabled.
+
+#### Boot with AIA
+
+The new kernel should be able to boot with AIA in place, change your start
+script like this:
+
+```bash
+# Change memory and cores that fits in your host
+qemu-system-riscv64 \
+    -machine virt,aia=aplic-imsic \
+    -nographic \
+    -m 96G \
+    -smp 16 \
+    -bios /usr/lib/riscv64-linux-gnu/opensbi/generic/fw_jump.bin \
+    -kernel /usr/lib/u-boot/qemu-riscv64_smode/uboot.elf \
+    -device virtio-net-device,netdev=eth0 \
+    -netdev user,id=eth0,hostfwd=tcp::12055-:22 \
+    -device virtio-rng-pci \
+    -drive file=$1,format=raw,if=virtio \
+```
+
+Now the VM is ready for type II hypervisor development.
