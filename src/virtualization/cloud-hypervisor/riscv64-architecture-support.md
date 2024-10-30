@@ -10,7 +10,10 @@ cargo depgraph --dedup-transitive-deps --features kvm --include arch,block,devic
 With this command, a PNG will be generated demonstrating the overall
 architecture of current cloud-hypervisor. The crates shown are crates within the
 Rust Type II virtualization stack, and are composed primarily by
-`cloud-hypervisor` team and `rust-vmm` team.
+`cloud-hypervisor` team and `rust-vmm` team. Crates from `rust-vmm` team are
+marked green:
+
+![cloud-hypervisor-architecture](../../illustrations/cloud-hypervisor-v42-architecture.png)
 
 Crates from `rust-vmm` are the foundation of `cluod-hypervisor`, so these works
 should be finished ahead of supporting `cloud-hypervisor` on RISC-V.
