@@ -9,4 +9,5 @@
 # Virtualization Observation
 
 - [Cloud-Hypervisor](<>)
+  - [RISC-V CI](virtualization/cloud-hypervisor/heterogeneous-runner.md)
   - [RISC-V Support](virtualization/cloud-hypervisor/riscv64-architecture-support.md)
