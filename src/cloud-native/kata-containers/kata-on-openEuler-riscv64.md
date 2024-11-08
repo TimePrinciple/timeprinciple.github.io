@@ -32,3 +32,25 @@ export PATH=$PATH:/opt/qemu/bin
 
 . .bashrc
 ```
+
+## Prepare openEuler RISC-V
+
+```sh
+mkdir -p /opt/openEuler
+pushd /opt/openEuler
+
+# Use 24.09 for the time being, you may choose what's latest
+wget https://repo.openeuler.org/openEuler-24.09/virtual_machine_img/riscv64/RISCV_VIRT_CODE.fd
+wget https://repo.openeuler.org/openEuler-24.09/virtual_machine_img/riscv64/RISCV_VIRT_VARS.fd
+wget https://repo.openeuler.org/openEuler-24.09/virtual_machine_img/riscv64/openEuler-24.09-riscv64.qcow2.xz
+wget https://repo.openeuler.org/openEuler-24.09/virtual_machine_img/riscv64/start_vm.sh
+
+# Tune command to work with QEMU greater than v9.0.2
+sed -i 's/-drive file="$drive",format=qcow2,id=hd0 \\/-drive file="$drive",format=qcow2,id=hd0,if=none \\/g' start_vm.sh
+
+# Extract qcow2 image
+unxz openEuler-24.09-riscv64.qcow2.xz
+
+# Start VM, default account/password is root/openEuler12#$
+bash start_vm.sh
+```
