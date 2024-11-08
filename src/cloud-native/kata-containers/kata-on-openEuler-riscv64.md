@@ -35,6 +35,8 @@ export PATH=$PATH:/opt/qemu/bin
 
 ## Prepare openEuler RISC-V
 
+### Get a Working openEuler RISC-V
+
 ```sh
 mkdir -p /opt/openEuler
 pushd /opt/openEuler
