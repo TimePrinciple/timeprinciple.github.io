@@ -56,3 +56,36 @@ unxz openEuler-24.09-riscv64.qcow2.xz
 # Start VM, default account/password is root/openEuler12#$
 bash start_vm.sh
 ```
+
+### Replace Kernel with Latest Mainline Kernel
+
+If you are trying to use VMM other than QEMU, you will need a kernel with AIA
+(Advance Interrupt Architecture) available (generally higher than or equal to
+v6.10).
+
+```sh
+# In openEuler RISC-V 64-bit VM
+sudo dnf update
+
+# Install dependencies required to build and install latest mainline kernel
+sudo dnf install automake golang gcc bc glibc-devel glibc-static busybox \
+    glib2-devel glib2 ipvsadm conntrack-tools nfs-utils clang-devel patch \
+    elfutils-libelf-devel openssl-devel bison flex rust cargo rust-packaging libgcc \
+    dtc-devel protobuf-compiler dwarves
+
+# Get kernel source code, v6.12 is the latest at the time of writing
+git clone --depth 1 --branch v6.12 https://github.com/torvalds/linux.git
+pushd linux
+make defconfig
+make -j$(nproc)
+make headers_install
+make modules_install
+make install
+popd
+
+# Reboot with kernel just installed
+reboot
+```
+
+If booting with newly installed kernel goes well, new we are set, the
+environment is capable of running VMMs.
