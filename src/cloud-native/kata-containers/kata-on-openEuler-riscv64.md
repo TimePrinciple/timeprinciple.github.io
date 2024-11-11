@@ -39,7 +39,7 @@ export PATH=$PATH:/opt/qemu/bin
 
 ```sh
 mkdir -p /opt/openEuler
-pushd /opt/openEuler
+cd /opt/openEuler
 
 # Use 24.09 for the time being, you may choose what's latest
 wget https://repo.openeuler.org/openEuler-24.09/virtual_machine_img/riscv64/RISCV_VIRT_CODE.fd
