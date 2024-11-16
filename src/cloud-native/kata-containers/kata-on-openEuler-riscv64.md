@@ -53,8 +53,16 @@ sed -i 's/-drive file="$drive",format=qcow2,id=hd0 \\/-drive file="$drive",forma
 # Extract qcow2 image
 unxz openEuler-24.09-riscv64.qcow2.xz
 
+# Resize image
+qemu-img resize openEuler-24.09-riscv64.qcow2 +100G
+
 # Start VM, default account/password is root/openEuler12#$
 bash start_vm.sh
+
+# Login to VM, grow root (/) partition
+sudo dnf update
+sudo dnf install could-utils
+growpart /dev/vda 2
 ```
 
 ### Replace Kernel with Latest Mainline Kernel
